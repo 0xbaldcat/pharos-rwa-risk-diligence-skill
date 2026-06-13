@@ -102,12 +102,13 @@ rwa-risk-diligence
 Run against deployed Pharos Atlantic mock contracts:
 
 ```bash
-export PHAROS_RPC_URL="https://atlantic.dplabs-internal.com"
-export RWA_PROVIDER=pharos-live-mock
-export RWA_LOW_ADDRESS="0x9C2826939C6b87E2c8F1fB582BC1354897d78997"
-export RWA_CRITICAL_ADDRESS="0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17"
-python3 examples/agent_demo.py
+python3 examples/agent_demo.py --provider pharos-testnet
 ```
+
+Provider modes:
+- `fixture`: offline deterministic sample signals, no network.
+- `pharos-testnet`: read-only Pharos Atlantic testnet RPC, default `chain_id` 688689 and keyless RPC `https://atlantic.dplabs-internal.com`.
+- `pharos-mainnet`: same read-only interface for Pharos mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
 
 Deployed demo contracts:
 - CompliantMockRWA: `0x9C2826939C6b87E2c8F1fB582BC1354897d78997` -> LOW / allow

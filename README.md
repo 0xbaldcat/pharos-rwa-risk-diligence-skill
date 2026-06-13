@@ -79,7 +79,7 @@ Pharos Atlantic testnet parameters:
 - Explorer: <https://pharos-testnet.socialscan.io>
 - Faucet/dashboard: <https://testnet.pharosnetwork.xyz> (select Atlantic / 688689)
 - Live RPC remains injectable; the default demo uses fixtures and no network.
-- The optional `pharos-live-mock` provider reads deployed demo contracts with read-only RPC calls and never sends transactions.
+- The optional `pharos-testnet` provider reads deployed demo contracts with read-only RPC calls and never sends transactions.
 
 ## Quick Start
 
@@ -100,11 +100,19 @@ PYTHONPATH=src python3 -m rwa_risk_diligence.cli
 Read deployed Pharos Atlantic mock contracts through the narrow live provider:
 
 ```bash
-export PHAROS_RPC_URL="https://atlantic.dplabs-internal.com"
-export RWA_PROVIDER=pharos-live-mock
-export RWA_LOW_ADDRESS="0x9C2826939C6b87E2c8F1fB582BC1354897d78997"
-export RWA_CRITICAL_ADDRESS="0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17"
-python3 examples/agent_demo.py
+python3 examples/agent_demo.py --provider pharos-testnet
+```
+
+Provider modes:
+
+- `fixture`: offline deterministic sample signals, no network.
+- `pharos-testnet`: read-only Pharos Atlantic testnet RPC, default `chain_id` 688689 and keyless RPC `https://atlantic.dplabs-internal.com`.
+- `pharos-mainnet`: same read-only interface for Pharos mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
+
+Advanced override:
+
+```bash
+RWA_PROVIDER=pharos-testnet PHAROS_RPC_URL=https://atlantic.dplabs-internal.com python3 examples/agent_demo.py
 ```
 
 The live mock provider uses `eth_getCode` and `eth_call` against fixed mock-token view methods: `owner`, `adminType`, `timelockDelay`, `mintCap`, `sourceVerifiedFlag`, `privilegedPowers`, and `isUpgradeable`.

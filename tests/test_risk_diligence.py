@@ -1,5 +1,13 @@
 from rwa_risk_diligence import CentralizationPower, ContractSignalSet, RiskDiligenceSkill
-from rwa_risk_diligence.cli import CHAIN_ID, CRITICAL_ADDRESS, LOW_ADDRESS, demo_fixtures
+from rwa_risk_diligence.cli import (
+    CHAIN_ID,
+    CRITICAL_ADDRESS,
+    LOW_ADDRESS,
+    MAINNET_CHAIN_ID,
+    build_provider,
+    default_chain_id,
+    demo_fixtures,
+)
 from rwa_risk_diligence.provider import FixtureRiskSignalProvider, PharosLiveMockSignalProvider
 
 
@@ -107,6 +115,16 @@ def test_unknown_holder_type_reduces_confidence():
     memo = RiskDiligenceSkill(provider).generate_due_diligence_memo(CHAIN_ID, address, block="123456")
 
     assert memo.confidence == 0.9
+
+
+def test_provider_names_cover_fixture_testnet_and_mainnet_modes():
+    assert default_chain_id("fixture") == CHAIN_ID
+    assert default_chain_id("pharos-testnet") == CHAIN_ID
+    assert default_chain_id("pharos-mainnet") == MAINNET_CHAIN_ID
+    assert isinstance(build_provider("fixture", ""), FixtureRiskSignalProvider)
+    assert isinstance(build_provider("pharos-testnet", ""), PharosLiveMockSignalProvider)
+    assert isinstance(build_provider("pharos-mainnet", "https://rpc.test"), PharosLiveMockSignalProvider)
+    assert isinstance(build_provider("pharos-live-mock", ""), PharosLiveMockSignalProvider)
 
 
 def test_live_mock_provider_reads_view_signals_for_low_risk_contract():
