@@ -1,6 +1,6 @@
 {
-  "chain_id": "688688",
-  "address": "0x2000000000000000000000000000000000000002",
+  "chain_id": "688689",
+  "address": "0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17",
   "block": "123456",
   "asset_type": "ERC20",
   "fixture_case": "upgradeable EOA-admin RWA token"

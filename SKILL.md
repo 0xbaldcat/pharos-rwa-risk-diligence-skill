@@ -18,7 +18,7 @@ It is designed for RWA and contract review workflows where compliance powers mus
 - A reviewer needs to distinguish compliant RWA controls from unsafe centralized control.
 
 ## Required Inputs
-- `chain_id`: Pharos testnet is `688688`.
+- `chain_id`: Pharos Atlantic testnet is `688689`.
 - `address`: contract or token address to review.
 - Optional `block`: block tag or height. Use `latest` when not specified.
 - Optional provider data: contract code, proxy/admin fields, owner type, privileged functions, source verification, mint/fee constraints, timelock, and holder concentration.
@@ -99,6 +99,20 @@ Run the CLI demo:
 rwa-risk-diligence
 ```
 
+Run against deployed Pharos Atlantic mock contracts:
+
+```bash
+export PHAROS_RPC_URL="https://atlantic.dplabs-internal.com"
+export RWA_PROVIDER=pharos-live-mock
+export RWA_LOW_ADDRESS="0x9C2826939C6b87E2c8F1fB582BC1354897d78997"
+export RWA_CRITICAL_ADDRESS="0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17"
+python3 examples/agent_demo.py
+```
+
+Deployed demo contracts:
+- CompliantMockRWA: `0x9C2826939C6b87E2c8F1fB582BC1354897d78997` -> LOW / allow
+- RiskyMockRWA: `0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17` -> CRITICAL / block
+
 ## Output
 Return a JSON object containing:
 - contract identity and chain
@@ -115,6 +129,7 @@ Return a JSON object containing:
 - Read-only by default.
 - Provider access is injectable.
 - Default demos are offline and deterministic.
+- Optional Pharos live mock provider uses only `eth_getCode` and `eth_call` for fixed view methods.
 - No shell execution.
 - No hidden file writes.
 - No broad network access.

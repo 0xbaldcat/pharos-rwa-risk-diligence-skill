@@ -71,13 +71,15 @@ Scanner-sensitive rules:
 - no secrets in fixtures, logs, or examples
 - live RPC access should be added through a small provider adapter only
 
-Pharos testnet parameters:
+Pharos Atlantic testnet parameters:
 
-- Chain ID: `688688`
+- Chain ID: `688689`
 - Native token: `PHRS`
-- Explorer: <https://testnet.pharosscan.xyz>
-- Faucet/dashboard: <https://testnet.pharosnetwork.xyz>
+- RPC: `https://atlantic.dplabs-internal.com` (inject through `PHAROS_RPC_URL`; never hard-code keys)
+- Explorer: <https://pharos-testnet.socialscan.io>
+- Faucet/dashboard: <https://testnet.pharosnetwork.xyz> (select Atlantic / 688689)
 - Live RPC remains injectable; the default demo uses fixtures and no network.
+- The optional `pharos-live-mock` provider reads deployed demo contracts with read-only RPC calls and never sends transactions.
 
 ## Quick Start
 
@@ -95,6 +97,25 @@ Without installing:
 PYTHONPATH=src python3 -m rwa_risk_diligence.cli
 ```
 
+Read deployed Pharos Atlantic mock contracts through the narrow live provider:
+
+```bash
+export PHAROS_RPC_URL="https://atlantic.dplabs-internal.com"
+export RWA_PROVIDER=pharos-live-mock
+export RWA_LOW_ADDRESS="0x9C2826939C6b87E2c8F1fB582BC1354897d78997"
+export RWA_CRITICAL_ADDRESS="0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17"
+python3 examples/agent_demo.py
+```
+
+The live mock provider uses `eth_getCode` and `eth_call` against fixed mock-token view methods: `owner`, `adminType`, `timelockDelay`, `mintCap`, `sourceVerifiedFlag`, `privilegedPowers`, and `isUpgradeable`.
+
+Demo contracts:
+
+| Contract | Expected result | Explorer |
+| --- | --- | --- |
+| CompliantMockRWA `0x9C2826939C6b87E2c8F1fB582BC1354897d78997` | LOW / allow | <https://pharos-testnet.socialscan.io/address/0x9C2826939C6b87E2c8F1fB582BC1354897d78997> |
+| RiskyMockRWA `0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17` | CRITICAL / block | <https://pharos-testnet.socialscan.io/address/0xf0D41F52EeF2d4E50F3f40842239C6169E48AB17> |
+
 ## Output Schema
 
 The memo is JSON and follows this shape:
@@ -102,7 +123,7 @@ The memo is JSON and follows this shape:
 ```json
 {
   "address": "0x...",
-  "chain_id": "688688",
+  "chain_id": "688689",
   "block": "123456",
   "asset_type": "ERC20",
   "risk_level": "LOW|MEDIUM|HIGH|CRITICAL",
@@ -112,7 +133,7 @@ The memo is JSON and follows this shape:
   "red_flags": [],
   "dd_checklist": [],
   "unknowns": [],
-  "data_sources": ["fixture", "rpc:pharos-testnet"]
+  "data_sources": ["fixture", "rpc:pharos-atlantic"]
 }
 ```
 
@@ -130,5 +151,6 @@ The package is intentionally small:
 - `RiskDiligenceSkill` contains the primitive API.
 - `RiskSignalProvider` is the boundary for Pharos RPC or explorer data.
 - `FixtureRiskSignalProvider` powers tests and video demos without live network access.
+- `PharosLiveMockSignalProvider` powers the Pharos Atlantic demo against deployed mock contracts with fixed view methods.
 
 After Pharos package requirements are confirmed, add a thin wrapper around this core rather than changing the core contracts.
