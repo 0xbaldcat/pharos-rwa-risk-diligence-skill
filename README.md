@@ -107,7 +107,7 @@ Provider modes:
 
 - `fixture`: offline deterministic sample signals, no network.
 - `pharos-testnet`: read-only Pharos Atlantic testnet RPC, default `chain_id` 688689 and keyless RPC `https://atlantic.dplabs-internal.com`.
-- `pharos-mainnet`: same read-only interface for Pharos mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
+- `pharos-mainnet`: same read-only interface for Pharos Pacific Mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
 
 Advanced override:
 

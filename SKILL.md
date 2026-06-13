@@ -108,7 +108,7 @@ python3 examples/agent_demo.py --provider pharos-testnet
 Provider modes:
 - `fixture`: offline deterministic sample signals, no network.
 - `pharos-testnet`: read-only Pharos Atlantic testnet RPC, default `chain_id` 688689 and keyless RPC `https://atlantic.dplabs-internal.com`.
-- `pharos-mainnet`: same read-only interface for Pharos mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
+- `pharos-mainnet`: same read-only interface for Pharos Pacific Mainnet, default `chain_id` 1672 and keyless RPC `https://rpc.pharos.xyz`; just give the mainnet address (RPC overridable via `--rpc-url`).
 
 Deployed demo contracts:
 - CompliantMockRWA: `0x9C2826939C6b87E2c8F1fB582BC1354897d78997` -> LOW / allow
