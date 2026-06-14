@@ -11,6 +11,17 @@ This skill produces a deterministic risk memo for a Pharos tokenized asset or co
 
 It is designed for RWA and contract review workflows where compliance powers must be interpreted in context rather than treated as automatic failures.
 
+## Capability Index
+Entry point: match the user's intent below, then follow the linked section. (Read this file first, scan this index, then execute the referenced capability.)
+
+| User Need | Capability | Detailed Instructions |
+| --- | --- | --- |
+| Is this Pharos RWA token / contract safe to allowlist or trust? | `generate_due_diligence_memo(chain_id, address)` | → [Workflow](#workflow) |
+| Get a token's risk level, confidence, and allow / warn / block verdict | `summarize_risk_level` + `verdict` | → [Primitives / API](#primitives--api) |
+| Read the raw on-chain risk signals (S1–S7) for an address | `collect_contract_signals(chain_id, address)` | → [Workflow](#workflow) |
+| Map collected signals to the audit red flags (RF-01..RF-10) | `match_red_flags(signals)` | → [Red Flags (RF-01 to RF-10)](#red-flags-rf-01-to-rf-10) |
+| Screen a destination contract before a treasury payment | `verdict(memo)` (consumed by the Treasury Guardrail Skill) | → [Output](#output) |
+
 ## When To Use / Triggers
 - A request asks whether a Pharos RWA token or contract is safe enough to trust.
 - A workflow needs a structured diligence memo for a tokenized asset.
